@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <!-- ===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- ===== font Awesome Sdn ==== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <title>Signup</title>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-bar">
+            <i class='bx bx-menu sidebarOpen'></i>
+            <span class="logo navLogo"><a href="#">Olx</a></span>
+
+            <div class="menu">
+                <div class="logo-toggle">
+                    <span class="logo"><a href="#">Olx</a></span>
+                    <i class='bx bx-x siderbarClose'></i>
+                </div>
+
+                <ul class="nav-links">
+                    <li>
+                        <i class="fa-solid fa-house"></i>
+                        <a href="#">
+                            property
+                        </a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-car"></i>
+                        <a href="#">Motors</a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="darkLight-searchBox">
+                <div class="dark-light">
+                    <i class='bx bx-moon moon'></i>
+                    <i class='bx bx-sun sun'></i>
+                </div>
+
+                <div class="searchBox">
+                    <div class="searchToggle">
+                        <i class='bx bx-x cancel'></i>
+                        <i class='bx bx-search search'></i>
+                    </div>
+
+                    <div class="search-field">
+                        <input type="text" placeholder="Search...">
+                        <i class='bx bx-search'></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- =================================================================================== -->
+
+    <div class="second_header">
+        <i class="fa-solid fa-bars"></i>
+
+        <div class="links">
+            <ul>
+                <li><a href="#">All categories</a></li>
+                <li><a href="#">Mobile Phone</a></li>
+                <li><a href="#">Houses</a></li>
+                <li><a href="#">Tablets</a></li>
+            </ul>
+        </div>
+        <div class="login">
+            <button onclick="window.location = '../login/index.html' ">login</button>
+            <button>Create & Sell</button>
+        </div>
+    </div>
+    <!-- =================================================================================== -->
+
+    <div class="register_container">
+        <div class="wrapper">
+            <h2>Registration</h2>
+            <form action="#" onsubmit="return SignUP(event)">
+              <div class="input-box">
+                <input id="name" type="text" placeholder="Enter your name" required>
+              </div>
+              <div class="input-box">
+                <input id="age" type="number" placeholder="Enter your Age" required>
+              </div>
+              <div class="input-box">
+                <input id="email" type="email" placeholder="Enter your Email" required>
+              </div>
+              <div class="input-box">
+                <input id="pass" type="password" placeholder="Enter Your password" required>
+              </div>
+              <div class="policy">
+                <input type="checkbox">
+                <h3>I accept all terms & condition</h3>
+              </div>
+              <div class="input-box button">
+                <input type="Submit" value="Register Now">
+              </div>
+              <div class="text">
+                <h3>Already have an account? <a href="#">Login now</a></h3>
+              </div>
+            </form>
+          </div>
+    </div>
+
+    <!-- =================================================================================== -->
+    <footer>
+        <div class="box1">
+            <h3>popular categories</h3>
+            <ul>
+                <li><a href="#">Cars</a></li>
+                <li><a href="#">Flat for rent</a></li>
+                <li><a href="#">Mobile Phone</a></li>
+                <li><a href="#">Jobs</a></li>
+            </ul>
+        </div>
+        <div class="box2">
+            <h3>Trending Searches</h3>
+            <ul>
+                <li><a href="#">Bikes</a></li>
+                <li><a href="#">Watches</a></li>
+                <li><a href="#">Books</a></li>
+                <li><a href="#">Dogs</a></li>
+            </ul>
+        </div>
+        <div class="box3">
+            <h3>About us</h3>
+            <ul>
+                <li><a href="#">About Empg</a></li>
+                <li><a href="#">Olx Blog</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Olx Business</a></li>
+            </ul>
+        </div>
+        <div class="box4">
+            <div class="icon">
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-twitter"></i>
+                <i class="fa-solid fa-play"></i>
+                <i class="fa-brands fa-square-instagram"></i>
+
+            </div>
+            <h2>Follow us</h2>
+        </div>
+
+    </footer>
+
+    <script type="module" src="../config/firebase.js"></script>
+    <script type="module" src="./app.js"></script>
+</body>
+
+</html>
