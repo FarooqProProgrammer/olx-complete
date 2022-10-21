@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header{
+    width: 100%;
+    height: 70px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+header button{
+    width: 100px;
+    height: 40px;
+}
+.chat{
+    width: 50%;
+    height: 87vh;
+    border: 2px solid black;
+    margin: 0 auto;
+    
+}
+.chat_Message{
+    width: 100%;
+    height: 75vh;
+    border: 2px solid black;
+}
+.chat_input {
+    padding-left: 20px;
+    padding-top: 20px;
+}
+.chat_box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#mt-btn{
+    margin-left: 60px !important;
+}

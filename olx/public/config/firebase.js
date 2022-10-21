@@ -179,16 +179,16 @@ async function uploadImage(image){
 
 
 
-function getRealTime(callback){
-  onSnapshot(collection(db, "ADDS"), (querySnapshot) => {
-    const cities = [];
-    querySnapshot.forEach((doc) => {
-        cities.push({id:doc.id,...doc.data()});
-    });
-    console.log("Current cities in CA: ", cities.join(", "));
-  });
+// function getRealTime(callback){
+//   onSnapshot(collection(db, "ADDS"), (querySnapshot) => {
+//     const cities = [];
+//     querySnapshot.forEach((doc) => {
+//         cities.push({id:doc.id,...doc.data()});
+//     });
+//     console.log("Current cities in CA: ", cities.join(", "));
+//   });
   
-  }
+//   }
   
 
 
@@ -201,16 +201,100 @@ async function getAdsFromDb() {
 
 }
 
+async function addMessages(meassage) {
+  const user = auth.currentUser;
+  // Add a new document with a generated id.
+  console.log(meassage);
+
+
+  let a = new Date()
+  let time = a.getHours()+':'+a.getMinutes()+":"+a.getSeconds()
+  // Add a new document with a generated id.
+  const docRef = await addDoc(collection(firestore, "infinity_Room"), {
+    uid: user.uid,
+    userEmail:user.email,
+    Message: meassage ,
+    CreatedAt:time
+  });
+  // console.log("Document written with ID: ", docRef.id);
+  console.log("Message Added Successfully");
+}
+
+function getRealtimeAds() {
+  //2
+  onSnapshot(collection(firestore, "infinity_Room"), (querySnapshot) => {
+      const ads = []
+
+      querySnapshot.forEach((doc) => {
+          ads.push({ id: doc.id, ...doc.data() })
+      });
+      //3
+      console.log(ads);
+    //  callback(ads)
+
+    const user = auth.currentUser;
+
+
+     let id = document.getElementById('start-chat')
+     id.style.overflow = "auto"
+     id.innerHTML = ''
+     
+   for(let i = 0;i<ads.length;i++) {
+    
+    let d = document.createElement('div')
+    d.style.marginTop = "20px"
+    // d.style.float = "left"
+    if(ads[i].uid == user.uid) {
+       
+     d.style.border = "2px solid black"
+     d.style.backgroundColor = "#3498db"
+     d.style.color = "#ecf0f1"
+     d.style.width = "300px"
+    //  d.style.float = "right"
+    d.style.marginLeft = "700px"
+     d.style.display = "block"
+     d.style.clear = "left"
+
+     d.style.padding = "10px 10px"
+     
+   } 
+   else {
+    d.style.width = "300px"
+    d.style.backgroundColor = "#c0392b"
+    d.style.color = "#f1c40f"
+    d.style.padding = "10px 10px"
+   }
+   
+ 
+     let email = document.createElement('span')
+     email.innerHTML  = ads[i].userEmail +":  "
+     d.appendChild(email)
+ 
+     let s = document.createElement('span')
+     s.innerHTML = ads[i].Message+" "+ads[i].CreatedAt
+    
+    
+   
+ 
+     d.appendChild(s)
+     id.appendChild(d)
+   }
+
+  })
+}
+getRealtimeAds()
 
 export {
+  getRealtimeAds,
   id_return,
   signin ,
   Register,
   addInfo,
   getData,
   singleitem,
+  addMessages,
   id_data,
   uploadImage,
   getAdsFromDb,
-  getRealTime
+  // getRealTime
 }
