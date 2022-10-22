@@ -282,9 +282,51 @@ function getRealtimeAds() {
 
   })
 }
+
+
+
+
+
+
+async function checkChatroom(adUserId) {
+  const userId = auth.currentUser.uid
+  const q = query(collection(db, "chatrooms"),
+      where(`users.${userId}`, "==", true),
+      where(`users.${adUserId}`, "==", true))
+
+  const querySnapshot = await getDocs(q)
+
+  let room
+  querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+      room = { _id: doc.id, ...doc.data() }
+  })
+  return room
+}
+
+
+function createChatroom(adUserId) {
+  const userId = auth.currentUser.uid
+  const obj =  {
+      users: { 
+          [userId]: true, 
+          [adUserId]: true 
+      },
+      createdAt: Date.now()
+  } 
+  return addDoc(collection(db, "chatrooms"), obj)
+}
+
+
+
+
+
 getRealtimeAds()
 
 export {
+  createChatroom,
+  checkChatroom,
   getRealtimeAds,
   id_return,
   signin ,
