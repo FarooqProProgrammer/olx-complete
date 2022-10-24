@@ -1,27 +1,30 @@
-import {sendMessageTofirestore,getMessagesFromDb} from './config/firebase.js'
+import {sendMessageTofirestore,getMessagesFromfirestore} from '../config/firebase.js'
+
+// 
 
 
 
 
 
+// document.getElementById('c').addEventListener('click',async ()=>{
+    
 
 
-document.getElementById('SendMessage').addEventListener('click',async ()=>{
-    let input1 = document.getElementById('input-message') 
+// })
+// send()
+window.send = async function(){
+    let input1 = document.getElementById('input-message') .value
+    console.log(input1);
+    
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+        console.log(params.id);
+        let a = params.id
+        console.log(a);
+    
+        await sendMessageTofirestore(input1,a)
 
-
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(urlSearchParams.entries());
-    console.log(params.id);
-    let a = params.id
-    console.log(a);
-
-    await sendMessageTofirestore(input1.value,a)
-
-
-})
-
-
+}
 async function getMessage(){
 
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -30,7 +33,7 @@ async function getMessage(){
     let a = params.id
     console.log(a);
 
-    let message = await getMessagesFromDb(a,(data,id)=>{
+    let message = await getMessagesFromfirestore(a,(data,id)=>{
     
         // console.log(data);
         let messages = document.getElementById('messages')

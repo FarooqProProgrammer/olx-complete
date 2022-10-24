@@ -1,4 +1,8 @@
+// <<<<<<< HEAD
 import { getAdsFromfirestore} from "../config/firebase.js"
+// =======
+// import { getAdsFromDb } from "../config/firebase.js"
+// >>>>>>> dda37d5260f187a43ffd92fb0fd5cf70642bd06a
 
 
 

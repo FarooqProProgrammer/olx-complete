@@ -4,6 +4,8 @@ async function user(){
 
     
 
+    // let id = JSON.parse(localStorage.getItem("addUserID"))
+    // console.log();
     let data = await getData1()
     console.log(data);
 
