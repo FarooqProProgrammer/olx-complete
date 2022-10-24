@@ -1,11 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js"
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js'
-import { getFirestore, collection, addDoc,doc ,setDoc, query, where, getDocs,getDoc,onSnapshot} from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js'
+import { getFirestore, collection, addDoc,doc,getDocFromCache ,setDoc, query, where, getDocs,getDoc,onSnapshot} from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js'
 
 
 
-import {getStorage, ref ,uploadBytes,getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js'
+import {getStorage, ref ,uploadBytes ,getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-storage.js'
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -152,16 +152,51 @@ var id_data = []
 async function singleitem(ID){
   
 
-    const docref = doc(firestore,'ADDS',ID)
-    let n = await getDoc(docref)
-    let currentUser = n._document.data.value.mapValue.fields
-    localStorage.setItem("current",JSON.stringify(currentUser))
-    console.log(n._document.data.value.mapValue.fields);
+   
+    // let Adds = []
+    // const querySnapshot = await getDocs(collection(firestore, "ADDS"));
+    // querySnapshot.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   // console.log(doc.id, " => ", doc.data());
+    //   Adds.push({id:doc.id,... doc.data()})
+    // });
+    // // console.log(Adds);
 
-    // let currentUser = n._document.data.value.mapValue.fields
-    return n._document.data.value.mapValue.fields
+    // // localStorage.setItem("current",JSON.stringify(currentUser))
+    // let doc = []
+    // for(let i = 0;i<Adds.length;i++) {
+    //   if('5DDVO6WUbdGTKLBuNxdq' == Adds[i].id) {
+    //     doc.push(Adds[i])
+    //   }
+    // }
+    // // return doc
+    // console.log(doc);
+    // localStorage.setItem("Detail",JSON.stringify(doc))
 
-    localStorage.setItem("current",JSON.stringify(currentUser))
+
+
+
+    const docRef = doc(firestore, "ADDS", ID);
+    const docSnap = await getDoc(docRef);
+
+
+    let data = []
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      data.push({id:docSnap.id,...docSnap.data()})
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+return data
+
+
+
+
+
+
+
+
 
 
 
@@ -171,7 +206,7 @@ async function singleitem(ID){
 
 async function uploadImage(image){
   const storageRef = ref(storage,`images/${image.name}`)
-  const snapshot = await uploadBytes(storageRef,image)
+  const snapshot = await uploadBytes (storageRef,image)
   const url = await getDownloadURL(snapshot.ref)
   return url
 }
@@ -180,7 +215,7 @@ async function uploadImage(image){
 
 
 // function getRealTime(callback){
-//   onSnapshot(collection(db, "ADDS"), (querySnapshot) => {
+//   onSnapshot(collection(firestore, "ADDS"), (querySnapshot) => {
 //     const cities = [];
 //     querySnapshot.forEach((doc) => {
 //         cities.push({id:doc.id,...doc.data()});
@@ -192,12 +227,13 @@ async function uploadImage(image){
   
 
 
-async function getAdsFromDb() {
+async function getAdsFromfirestore() {
   const querySnapshot = await getDocs(collection(firestore, "ADDS"));
    const ads = [] 
    querySnapshot.forEach((doc) => {
       ads.push({ id: doc.id, ...doc.data() })
-  }); return ads
+  }); 
+  return ads
 
 }
 
@@ -247,7 +283,7 @@ function getRealtimeAds() {
     if(ads[i].uid == user.uid) {
        
      d.style.border = "2px solid black"
-     d.style.backgroundColor = "#3498db"
+     d.style.backgroundColor = "#3498firestore"
      d.style.color = "#ecf0f1"
      d.style.width = "300px"
     //  d.style.float = "right"
@@ -288,22 +324,79 @@ function getRealtimeAds() {
 
 
 
+// async function checkChatroom(adUserId) {
+//   const userId = auth.currentUser.uid
+//   const q = query(collection(firestore, "chatrooms"),
+//       where(`users.${userId}`, "==", true),
+//       where(`users.${adUserId}`, "==", true))
+
+//   const querySnapshot = await getDocs(q)
+
+//   let room
+//   querySnapshot.forEach((doc) => {
+//       // doc.data() is never undefined for query doc snapshots
+//       console.log(doc.id, " => ", doc.data());
+//       room = { _id: doc.id, ...doc.data() }
+//   })
+//   return room
+// }
+
+
+// function createChatroom(adUserId) {
+//   const userId = auth.currentUser.uid
+//   const obj =  {
+//       users: { 
+//           [userId]: true, 
+//           [adUserId]: true 
+//       },
+//       createdAt: Date.now()
+//   } 
+//   return addDoc(collection(firestore, "chatrooms"), obj)
+// }
+
+
+var data = []
+async function getData1(){
+  const q = query(collection(firestore, "users"));
+ 
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log();
+    data.push({id:doc.id,...doc.data()})
+  });
+  // return data
+  // console.log(data);
+  return data.slice(0,data.length)
+}
+
+// getData1()
+
 async function checkChatroom(adUserId) {
   const userId = auth.currentUser.uid
-  const q = query(collection(db, "chatrooms"),
+  const q = query(collection(firestore, "chatrooms"),
       where(`users.${userId}`, "==", true),
       where(`users.${adUserId}`, "==", true))
 
   const querySnapshot = await getDocs(q)
 
-  let room
+  var room
   querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
       room = { _id: doc.id, ...doc.data() }
   })
+  // console.log(room._id);
   return room
 }
+
+
+
+// let check = auth.currentUser
+// // console.log(check);
+
+
+
 
 
 function createChatroom(adUserId) {
@@ -315,16 +408,62 @@ function createChatroom(adUserId) {
       },
       createdAt: Date.now()
   } 
-  return addDoc(collection(db, "chatrooms"), obj)
+  return addDoc(collection(firestore, "chatrooms"), obj)
+}
+
+async function sendMessageTofirestore(text, roomId) {
+  console.log(roomId);
+  var Messageid = roomId + Date.now();
+  // const lastMessageRef = addDoc(collection(firestore, "chatrooms", `${roomId}`, "lastMessage"), { text: text, userId: auth.currentUser.uid })
+  // await setDoc(lastMessageRef, { text: text, userId: auth.currentUser.uid });
+  // const message = { text: text, createdAt: Date.now(), userId: auth.currentUser.uid }
+  // const DocRef = doc(firestore, "chatrooms", `${roomId}`, "messages", `${Messageid}`);
+  // await setDoc(DocRef, message);
+
+
+
+  const userId = auth.currentUser.uid
+
+ 
+  var Messageid = roomId + Date.now();
+  // const lastMessageRef = addDoc(collection(firestore, "chatrooms", `${roomId}`, "lastMessage"), { text: text, userId: auth.currentUser.uid })
+  // await setDoc(lastMessageRef, { text: text, userId: auth.currentUser.uid });
+  const message = { text: text, createdAt: Date.now(), userId: auth.currentUser.uid }
+  const DocRef = doc(firestore, "chatrooms", `${roomId}`, "messages", `${Messageid}`);
+  await setDoc(DocRef, message);
+
+
+
+
+
+}
+
+
+
+// var userId1 = auth.currentUser.uid
+
+// localStorage.setItem('currentUser',JSON.stringify(auth.currentUser))
+
+async function getMessagesFromfirestore(roomId,callback) {
+  const q = query(collection(firestore, "chatrooms", `${roomId}`, "messages"))
+  onSnapshot(q, (querySnapshot) => {
+      const messages = []
+      querySnapshot.forEach((doc) => {
+          messages.push({ id: doc.id, ...doc.data() })
+      })
+      console.log(messages);
+      callback(messages,auth.currentUser.uid)
+  })
 }
 
 
 
 
 
-getRealtimeAds()
+// getRealtimeAds()
 
 export {
+  getData1,
   createChatroom,
   checkChatroom,
   getRealtimeAds,
@@ -337,6 +476,8 @@ export {
   addMessages,
   id_data,
   uploadImage,
-  getAdsFromDb,
+  getAdsFromfirestore,
+  sendMessageTofirestore,
+  getMessagesFromfirestore
   // getRealTime
 }

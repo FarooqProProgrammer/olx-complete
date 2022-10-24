@@ -1,4 +1,4 @@
-import {addMessages , getRealtimeAds} from '../config/firebase.js'
+import {addMessages } from '../config/firebase.js'
 
 
 document.getElementById('mt-btn').addEventListener('click', async ()=>{

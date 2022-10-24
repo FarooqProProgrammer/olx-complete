@@ -3,14 +3,18 @@ import {singleitem,id_data} from '../config/firebase.js'
 
 
 
-window.getInfo =async function () {
+async function getInfo() {
     let v = window.location.href
-    let id = v.slice(47)
-
-    let data =await singleitem(id)
-
-    // console.log(data1);
     
+    let id = v.slice(v.indexOf('=')+1)
+
+    let doc = JSON.parse(localStorage.getItem("Detail"))
+    
+    console.log(id);
+    let data = await singleitem(id)
+    console.log(data);
+    // let {image} = data
+    // console.log(image);    
 
     // console.log(data);
     // let data = JSON.parse(localStorage.getItem("current"));
@@ -18,28 +22,36 @@ window.getInfo =async function () {
     // console.log();
 
     let img = document.getElementById('img')     
-    img.src =data.image.stringValue
-    console.log(data.image.stringValue
-        );
-
+    // img.src =data.imageUrl.stringValue
+  
 
     let info = document.getElementById('info')
-    info.innerHTML =data.area.stringValue
+    info.innerHTML =data.area
 
 
 
 
-
-    let Address = document.getElementById('Address')
-    Address.innerHTML =data.Address.stringValue
+    console.log(data.price);
+    let Address = document.getElementById('price')
+    Address.innerHTML =data.price
 
     let cardBody  =document.getElementById('cardBody')
     // cardBody.style.backgroundImage = 
     // cardBody.style.backgroundSize = '100% 100%'
 
-    document.getElementById('title').innerHTML =data.title.stringValue
+    document.getElementById('title').innerHTML =data.title
 
     
 }
 
 getInfo()
+
+
+function gotoChat(){
+    let v = window.location.href
+    
+    let id = v.slice(v.indexOf('=')+1)
+    localStorage.setItem('addUserID',JSON.stringify(id))
+}
+
+gotoChat()

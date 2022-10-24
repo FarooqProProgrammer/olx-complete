@@ -1,4 +1,4 @@
-import { getAdsFromDb } from "../config/firebase.js"
+import { getAdsFromfirestore} from "../config/firebase.js"
 
 
 
@@ -20,7 +20,7 @@ else{
 
 getAds()
 async function getAds(){
-  const ads = await getAdsFromDb();
+  const ads = await getAdsFromfirestore();
   console.log(ads);
 
 
