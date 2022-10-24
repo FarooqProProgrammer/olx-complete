@@ -1,4 +1,4 @@
-import {singleitem} from '../config/firebase.js'
+import {singleitem,addOwner} from '../config/firebase.js'
 
 
 
@@ -38,6 +38,8 @@ async function getInfo() {
     let Address = document.getElementById('price')
     Address.innerHTML =data[0].price
 
+    let ad = document.getElementById("Address")
+    ad.innerHTML = data[0].Address
     let cardBody  =document.getElementById('cardBody')
     // cardBody.style.backgroundImage = 
     // cardBody.style.backgroundSize = '100% 100%'
@@ -55,3 +57,22 @@ getInfo()
 // }
 
 // gotoChat()
+
+
+window.addOwner1 = async function () {
+    let v = window.location.href
+    
+    let id = v.slice(v.indexOf('=')+1)
+    let data = await singleitem(id)
+
+
+    console.log(data[0].userID);
+
+   let addOwner1 = await addOwner(data[0].userID)
+   console.log(addOwner1);
+
+   let name1 = document.getElementById('name')
+   name1.innerHTML = addOwner1.Name
+}
+
+addOwner1()

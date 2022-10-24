@@ -213,6 +213,22 @@ async function uploadImage(image){
 
 
 
+async function addOwner(id){
+      const docRef = doc(firestore, "users", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+
+      return {id:docSnap.id,...docSnap.data()}
+
+}
+
+
 
 // function getRealTime(callback){
 // <<<<<<< HEAD
@@ -572,6 +588,7 @@ export {
   // getRealtimeAds,
   id_return,
   signin ,
+  addOwner,
   Register,
   addInfo,
   getData,

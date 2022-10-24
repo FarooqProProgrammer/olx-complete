@@ -344,9 +344,28 @@ a{
     }
 }
 /* ============================================================================== */
+.Add_owner{
+    width: 900px;
+    height: 60px;
+    /* border: 2px solid black; */
+    margin: 0 auto;
+    display: flex;
+}
+#owner{
+    font-size: large;
+    font-weight: bolder;
+}
+#name{
+    font-weight: bolder;
+    color: #4070F4;
+}
+.Add_owner p {
+    margin-top: 20px;
+    margin-left: 10px;
+}
 .products_card{
     width: 80%;
-    height: 490px;
+    height: 420px;
     /* border: 2px solid black; */
     margin: 0 auto;
     border-radius: 20px;
