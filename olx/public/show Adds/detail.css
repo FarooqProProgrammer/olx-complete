@@ -350,6 +350,7 @@ a{
     /* border: 2px solid black; */
     margin: 0 auto;
     display: flex;
+    margin-left: 100px;
 }
 #owner{
     font-size: large;
