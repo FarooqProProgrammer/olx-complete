@@ -61,7 +61,7 @@ window.getImage = function (e){
 
 
 
-window.Submit =async function (){
+window.Submit1 =async function (){
   
   const title = document.getElementById('title').value
   const price = document.getElementById('price').value
@@ -75,8 +75,8 @@ window.Submit =async function (){
   let userInfo = {Address,image,title,area,price}
   
   
-  addInfo(userInfo)
-
+   addInfo(userInfo)
+  
 
 
 }

@@ -1,4 +1,4 @@
-import {getData1,checkChatroom,createChatroom} from '../config/firebase.js'
+import {getData1,getUserData,checkChatroom,createChatroom} from '../config/firebase.js'
 
 async function user(){
 
@@ -14,7 +14,7 @@ async function user(){
     for (let i = 0;i<data.length;i++) {
 
         let div_body = document.createElement('div')
-        div_body.setAttribute('class','user1 flex justify-around items-center text-[20px] rounded-[10px] bg-[#000] w-[80%] h-[80px] border-2 border-[#000] ml-[90px] mt-[20px]')
+        div_body.setAttribute('class','user1 flex justify-around items-center text-[20px] rounded-[10px] bg-[#3498db] w-[80%] h-[80px]  ml-[90px] mt-[20px]')
         
     
         let div_name = document.createElement("div")
@@ -75,3 +75,24 @@ window.checkRoom =async function (id) {
 //     console.log('userId ===>', data.userId)
    
 // }
+
+
+
+
+
+async function getUser(){
+
+    let id_uid = JSON.parse(localStorage.getItem("item"))
+    console.log(id_uid.uid);
+
+    let userData = await getUserData(id_uid.uid)
+    console.log(userData);
+
+    document.getElementById("LoginName").innerHTML = userData.Name
+
+
+    user()
+
+}
+
+getUser()

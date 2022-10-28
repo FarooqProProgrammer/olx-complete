@@ -95,14 +95,14 @@ function addUser(userInfo,userID){
 
 
 
-function addInfo(userInfo){
-
-  const  {Address,image,title,area,price} = userInfo  
+async function addInfo(userInfo){
   const userID = auth.currentUser.uid
+  const  {Address,image,title,area,price} = userInfo  
+  
 
   try{
 
-    addDoc(collection(firestore, "ADDS"), {
+   await addDoc(collection(firestore, "ADDS"), {
       userID,
       Address,
       image,
@@ -112,13 +112,24 @@ function addInfo(userInfo){
     });
 
     console.log("Add Successfully")
-    
+    window.location = "../index.html"
 
   }catch(e){
     console.log("Error: " , e)
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 // const booksRef = firebase.firestore().collection('ADDS');
 var data = []
@@ -573,7 +584,16 @@ async function getMessagesFromfirestore(roomId,callback) {
 }
 
 
+async function getUserData(id)
+{
 
+  const docRef = doc(firestore, "users", id);
+  const docSnap = await getDoc(docRef);
+
+  return {...docSnap.data()}
+
+
+}
 
 
 // getRealtimeAds()
@@ -596,10 +616,11 @@ export {
   // addMessages,
   // id_data,
   uploadImage,
+  getUserData,
 // <<<<<<< HEAD
   getAdsFromfirestore,
   sendMessageTofirestore,
-  getMessagesFromfirestore,
+  getMessagesFromfirestore
 // =======
   // getAdsFromDb,
 // >>>>>>> dda37d5260f187a43ffd92fb0fd5cf70642bd06a
